@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onixia Base</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Orbitron', sans-serif;
+            overflow: hidden;
+            height: 100%;
+            width: 100%;
+        }
+
+        #background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('val.png');
+            background-size: cover;
+            background-position: center;
+            animation: zoomInOut 20s infinite alternate;
+            z-index: -1;
+        }
+
+        @keyframes zoomInOut {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        .container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .connect-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .connect-button {
+            background-color: #FFD700;
+            border: none;
+            color: #000;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 50px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .connect-button:hover {
+            background-color: #FFC000;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+
+        #collect-text {
+            font-size: 1.5rem;
+            margin-top: -2rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 5px rgba(255,255,255,0.5);
+            color: #000000; 
+        }
+
+        #info-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: yellow; 
+            border: none;
+            color: black; 
+            width: 40px;
+            height: 40px;
+            border-radius: 50%; 
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); 
+        }
+
+        #info-button:hover {
+            background-color: rgba(255,255,255,0.3);
+        }
+
+        #info-modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: rgba(0,0,0,0.8);
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            color: white;
+            border-radius: 10px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #social-links {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        #social-links a {
+            color: white;
+            font-size: 1.5rem;
+            margin-right: 15px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        #social-links a:hover {
+            color: #FFD700;
+            transform: scale(1.1);
+        }
+
+        #game-container {
+            display: none;
+        }
+
+        #nft-collection {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .nft-item {
+            width: 100px;
+            height: 100px;
+            margin: 0 10px;
+            background-size: cover;
+            background-position: center;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .nft-item:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .connect-buttons {
+                flex-direction: column;
+            }
+
+            #collect-text {
+                font-size: 1.2rem;
+            }
+
+            #nft-collection {
+                flex-wrap: wrap;
+            }
+
+            .nft-item {
+                margin: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="background-container"></div>
+    <div class="container">
+        <div id="social-links">
+            <a href="https://twitter.com/sadeghss50" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://github.com/onixs50" target="_blank"><i class="fab fa-github"></i></a>
+        </div>
+        
+        <div id="home-container">
+            <p id="collect-text">Collect all 4 NFTs to mint the rare 5th NFT!</p>
+            <h1 style="text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);">Welcome to Onixia Base</h1>
+            <div class="connect-buttons">
+                <button id="connect-metamask" class="connect-button">Connect MetaMask</button>
+                <button id="connect-okx" class="connect-button">Connect OKX Wallet</button>
+            </div>
+        </div>
+        
+        <div id="game-container">
+            <!-- Game content will be dynamically added here -->
+        </div>
+        
+        <button id="info-button">?</button>
+    </div>
+
+    <div id="info-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Game Info</h2>
+            <p>Mint NFTs by connecting your wallet and clicking the "Mint NFT" button. Each NFT has a different probability:</p>
+            <ul>
+                <li>NFT #3: 30%</li>
+                <li>NFT #1: 25%</li>
+                <li>NFT #2: 25%</li>
+                <li>NFT #4: 20%</li>
+            </ul>
+            <p>Once you have all 4 NFTs, you can mint the rare 5th NFT!</p>
+            <p>Made for Base Chain with love by onixia.</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+    <script>
+        let web3;
+        let account;
+        let contract;
+        let currentProvider;
+
+        const CONTRACT_ADDRESS = '0x8802079fF542eC94DBA486050CDf84B0632379bF';
+        const CONTRACT_ABI = [
+            {
+                "inputs": [],
+                "name": "mintNFT",
+                "outputs": [],
+                "stateMutability": "payable",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "address",
+                        "name": "playerAddress",
+                        "type": "address"
+                    }
+                ],
+                "name": "getPlayerNFTs",
+                "outputs": [
+                    {
+                        "internalType": "bool[4]",
+                        "name": "",
+                        "type": "bool[4]"
+                    },
+                    {
+                        "internalType": "bool",
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            }
+        ];
+
+        async function connectWallet(providerType) {
+            console.log('Attempting to connect wallet:', providerType);
+            try {
+                if (providerType === 'metamask' && typeof window.ethereum !== 'undefined') {
+                    currentProvider = window.ethereum;
+                } else if (providerType === 'okx' && typeof window.okxwallet !== 'undefined') {
+                    currentProvider = window.okxwallet;
+                } else {
+                    throw new Error(`${providerType} wallet not found`);
+                }
+
+                await currentProvider.request({ method: 'eth_requestAccounts' });
+                web3 = new Web3(currentProvider);
+                const accounts = await web3.eth.getAccounts();
+                account = accounts[0];
+                console.log('Connected account:', account);
+                
+                const chainId = await web3.eth.getChainId();
+                if (chainId !== 84532) {
+                    console.log('Not on Base Sepolia. Current chainId:', chainId);
+                    await switchToBaseSepolia();
+                }
+
+                contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
+                
+                document.getElementById('home-container').style.display = 'none';
+                document.getElementById('game-container').style.display = 'block';
+                updateNFTDisplay();
+            } catch (error) {
+                console.error('Failed to connect wallet:', error);
+                alert(`Failed to connect wallet: ${error.message}`);
+            }
+        }
+
+        async function switchToBaseSepolia() {
+            try {
+                await currentProvider.request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId: '0x14A34' }]
+                });
+            } catch (switchError) {
+                if (switchError.code === 4902) {
+                    try {
+                        await currentProvider.request({
+                            method: 'wallet_addEthereumChain',
+                            params: [{
+                                chainId: '0x14A34',
+                                chainName: 'Base Sepolia',
+                                nativeCurrency: {
+                                    name: 'Ether',
+                                    symbol: 'ETH',
+                                    decimals: 18
+                                },
+                                rpcUrls: ['https://sepolia.base.org'],
+                                blockExplorerUrls: ['https://sepolia.basescan.org']
+                            }]
+                        });
+                    } catch (addError) {
+                        throw new Error("Failed to add Base Sepolia network");
+                    }
+                } else {
+                    throw switchError;
+                }
+            }
+        }
+
+        async function mintNFT() {
+            try {
+                const mintPrice = web3.utils.toWei("0.00002", "ether");
+                await contract.methods.mintNFT().send({ from: account, value: mintPrice });
+                console.log("NFT minted successfully");
+                updateNFTDisplay();
+            } catch (error) {
+                console.error('Failed to mint NFT:', error);
+                alert('Failed to mint NFT. Please try again.');
+            }
+        }
+
+        async function updateNFTDisplay() {
+            const gameContainer = document.getElementById('game-container');
+            gameContainer.innerHTML = '<h2>Onixia Base Game</h2>';
+
+            try {
+                const result = await contract.methods.getPlayerNFTs(account).call();
+                const nftsOwned = result[0];
+                const hasRareNFT = result[1];
+
+                const nftCollection = document.createElement('div');
+                nftCollection.id = 'nft-collection';
+
+                for (let i = 0; i < 4; i++) {
+                    const nftItem = document.createElement('div');
+                    nftItem.className = 'nft-item';
+                    nftItem.style.backgroundImage = nftsOwned[i] ? `url('${i + 1}.png')` : 'url("question.png")';
+                    nftCollection.appendChild(nftItem);
+                }
+
+                gameContainer.appendChild(nftCollection);
+
+                const mintButton = document.createElement('button');
+                mintButton.textContent = 'Mint NFT (0.00002 ETH)';
+                mintButton.onclick = mintNFT;
+                mintButton.className = 'connect-button';
+                gameContainer.appendChild(mintButton);
+
+                if (nftsOwned.every(Boolean) && !hasRareNFT) {
+                    const mintRareNFTButton = document.createElement('button');
+                    mintRareNFTButton.textContent = 'Mint Rare NFT';
+                    mintRareNFTButton.onclick = mintNFT;
+                    mintRareNFTButton.className = 'connect-button';
+                    gameContainer.appendChild(mintRareNFTButton);
+                }
+
+                const backButton = document.createElement('button');
+                backButton.textContent = 'Back to Home';
+                backButton.onclick = disconnectWallet;
+                backButton.className = 'connect-button';
+                gameContainer.appendChild(backButton);
+
+                if (hasRareNFT) {
+                    showCelebration();
+                }
+            } catch (error) {
+                console.error('Failed to update NFT display:', error);
+                alert('Failed to update NFT display. Please try reconnecting your wallet.');
+            }
+        }
+
+        function showCelebration() {
+            alert('Congratulations! You\'ve minted the rare NFT!');
+        }
+
+function disconnectWallet() {
+            account = null;
+            web3 = null;
+            contract = null;
+            currentProvider = null;
+            document.getElementById('home-container').style.display = 'block';
+            document.getElementById('game-container').style.display = 'none';
+        }
+
+        document.getElementById('connect-metamask').addEventListener('click', () => connectWallet('metamask'));
+        document.getElementById('connect-okx').addEventListener('click', () => connectWallet('okx'));
+
+        // Info modal functionality
+        const modal = document.getElementById('info-modal');
+        const btn = document.getElementById('info-button');
+        const span = document.getElementsByClassName('close')[0];
+
+        btn.onclick = function() {
+            modal.style.display = 'block';
+        }
+
+        span.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        if (window.ethereum) {
+            window.ethereum.on('accountsChanged', (accounts) => {
+                if (accounts.length === 0) {
+                    console.log('Please connect to MetaMask.');
+                    disconnectWallet();
+                } else if (accounts[0] !== account) {
+                    account = accounts[0];
+                    console.log('Account changed to:', account);
+                    updateNFTDisplay();
+                }
+            });
+
+            window.ethereum.on('chainChanged', (_chainId) => window.location.reload());
+        }
+
+        if (window.okxwallet) {
+            window.okxwallet.on('accountsChanged', (accounts) => {
+                if (accounts.length === 0) {
+                    console.log('Please connect to OKX Wallet.');
+                    disconnectWallet();
+                } else if (accounts[0] !== account) {
+                    account = accounts[0];
+                    console.log('Account changed to:', account);
+                    updateNFTDisplay();
+                }
+            });
+
+            window.okxwallet.on('chainChanged', (_chainId) => window.location.reload());
+        }
+
+        // Function to handle window resize and adjust background image
+        function handleResize() {
+            const backgroundContainer = document.getElementById('background-container');
+            const aspectRatio = window.innerWidth / window.innerHeight;
+            
+            if (aspectRatio > 16/9) {
+                backgroundContainer.style.backgroundSize = '100% auto';
+            } else {
+                backgroundContainer.style.backgroundSize = 'auto 100%';
+            }
+        }
+
+        // Call handleResize on page load and window resize
+        window.addEventListener('load', handleResize);
+        window.addEventListener('resize', handleResize);
+
+        console.log('Script loaded successfully');
+    </script>
+</body>
+</html>
