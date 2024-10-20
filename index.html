@@ -23,7 +23,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('val.png');
+            background-image: url('https://raw.githubusercontent.com/Onixs50/base-nft-game/main/val.png');
             background-size: cover;
             background-position: center;
             animation: zoomInOut 20s infinite alternate;
@@ -387,12 +387,15 @@
                 const nftCollection = document.createElement('div');
                 nftCollection.id = 'nft-collection';
 
-                for (let i = 0; i < 4; i++) {
-                    const nftItem = document.createElement('div');
-                    nftItem.className = 'nft-item';
-                    nftItem.style.backgroundImage = nftsOwned[i] ? `url('${i + 1}.png')` : 'url("question.png")';
-                    nftCollection.appendChild(nftItem);
-                }
+for (let i = 0; i < 4; i++) {
+    const nftItem = document.createElement('div');
+    nftItem.className = 'nft-item';
+    nftItem.style.backgroundImage = nftsOwned[i] 
+        ? `url('https://raw.githubusercontent.com/Onixs50/base-nft-game/main/${i + 1}.png')` 
+        : 'url("https://raw.githubusercontent.com/Onixs50/base-nft-game/main/question.png")';
+    nftCollection.appendChild(nftItem);
+}
+
 
                 gameContainer.appendChild(nftCollection);
 
